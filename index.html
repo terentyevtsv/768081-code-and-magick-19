@@ -192,26 +192,26 @@
   // Скорость фаербола по ветру или против ветра.
   var getFireballSpeed = function(left) {
     return left ? WIND_SPEED : AGAINST_WIND_SPEED;
-  }
+  };
 
   // Скорость и ширина мага
   var wizardSpeed = 3;
   var wizardWidth = 70;
 
   // возвращает пропорциональную высоту мага от его ширины
-  var getWizardHeight = function(){
+  var getWizardHeight = function() {
     return WIZARD_HEIGHT_WIDTH_RATIO * wizardWidth;
-  }
+  };
 
   // возвращает горизонтальную позицию мага по середине поля
   var getWizardX = function(width) {
     return width / 2;
-  }
+  };
 
   // Возвращает высоту на которой появляется маг относительно высоты игрового поля от земли.
   var getWizardY = function(height) {
     return height / 3;
-  }
+  };
 </script>
 <script src="js/game.js"></script>
 
