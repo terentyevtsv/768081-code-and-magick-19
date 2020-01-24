@@ -37,8 +37,11 @@ var OWN_PLAYERS_DIAGRAM_COLUMN_COLOR = 'rgba(255, 0, 0, 1)';
 
 window.renderStatistics = function (ctx, names, times) {
   // Отрисовка облака с тенью
-  drawCloud(ctx, CLOUD_X + CLOUD_SHADOWS_OFFSET,
-      CLOUD_Y + CLOUD_SHADOWS_OFFSET, CLOUD_SHADOWS_COLOR);
+  drawCloud(
+      ctx,
+      CLOUD_X + CLOUD_SHADOWS_OFFSET,
+      CLOUD_Y + CLOUD_SHADOWS_OFFSET,
+      CLOUD_SHADOWS_COLOR);
   drawCloud(ctx, CLOUD_X, CLOUD_Y, CLOUD_COLOR);
 
   // Расположение текста сообщения после победы
@@ -97,7 +100,7 @@ var getMaxResult = function (times) {
   var maxTime = times[0];
 
   // Поиск максимального времени среди остальных элементов массива
-  for (var i = 0; i < times.length; ++i) {
+  for (var i = 1; i < times.length; ++i) {
     if (times[i] > maxTime) {
       maxTime = times[i];
     }
@@ -119,8 +122,7 @@ var drawDiagram = function (times, names, startX, topY, ctx) {
   for (var i = 0; i < times.length; ++i) {
     var currentColor = OWN_PLAYERS_DIAGRAM_COLUMN_COLOR;
     if (names[i] !== OWN_PLAYER_NAME) {
-      var saturation = getRandomValue(0, 100);
-      currentColor = 'hsl(240, ' + saturation + '%, 50%)';
+      currentColor = 'hsl(240, ' + getRandomValue(0, 100) + '%, 50%)';
     }
 
     drawBlock(currentX, topY, Math.round(times[i]), names[i], maxTime, ctx, currentColor);
@@ -136,7 +138,7 @@ var getRandomValue = function (min, max) {
 };
 
 // Рисование одного блока диаграммы
-var drawBlock = function (x, y, time, name, maxTime, ctx, fColor) {
+var drawBlock = function (x, y, time, name, maxTime, ctx, fillColor) {
   // Высота текущего блока в пикселях
   var blockHeight = DIAGRAM_HEIGHT * time / maxTime;
 
@@ -147,7 +149,7 @@ var drawBlock = function (x, y, time, name, maxTime, ctx, fColor) {
   var maxDistance = y + DIAGRAM_HEIGHT + TEXT_DISTANCE + TOP_LABEL_LUFT;
 
   // Отрисовка текущего столбца
-  ctx.fillStyle = fColor;
+  ctx.fillStyle = fillColor;
   ctx.fillRect(x, topDistance, COLUMN_WIDTH, blockHeight);
 
   // Отрисовка подписи столбца (Время игры и имя игрока)
