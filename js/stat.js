@@ -41,7 +41,8 @@ window.renderStatistics = function (ctx, names, times) {
       ctx,
       CLOUD_X + CLOUD_SHADOWS_OFFSET,
       CLOUD_Y + CLOUD_SHADOWS_OFFSET,
-      CLOUD_SHADOWS_COLOR);
+      CLOUD_SHADOWS_COLOR
+  );
   drawCloud(ctx, CLOUD_X, CLOUD_Y, CLOUD_COLOR);
 
   // Расположение текста сообщения после победы
