@@ -48,7 +48,7 @@ var similarWizardTemplate = document
   .querySelector('.setup-similar-item');
 
 // Контейнер, в который добавляются разметки случайных волшебников
-var similarWizardList = document.querySelector('.setup-similar-list');
+var wizardListContainer = document.querySelector('.setup-similar-list');
 
 // Показывает диалог настройки волшебника
 var showUserDialog = function () {
@@ -70,11 +70,11 @@ var renderWizards = function () {
   var documentFragment = document.createDocumentFragment();
 
   for (var i = 0; i < wizards.length; ++i) {
-    var wizardElement = renderWizard(wizards[i]);
-    documentFragment.appendChild(wizardElement);
+    var wizardInstance = renderWizard(wizards[i]);
+    documentFragment.appendChild(wizardInstance);
   }
 
-  similarWizardList.appendChild(documentFragment);
+  wizardListContainer.appendChild(documentFragment);
 };
 
 // Генерирует массив объектов волшебников с параметрами сгенерированными
@@ -107,13 +107,13 @@ var generateRandomWizards = function () {
 
 // создает элемент волшебника для DOM
 var renderWizard = function (wizard) {
-  var wizardElement = similarWizardTemplate.cloneNode(true);
+  var wizardInstance = similarWizardTemplate.cloneNode(true);
 
-  wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
-  wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
-  wizardElement.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
+  wizardInstance.querySelector('.setup-similar-label').textContent = wizard.name;
+  wizardInstance.querySelector('.wizard-coat').style.fill = wizard.coatColor;
+  wizardInstance.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
 
-  return wizardElement;
+  return wizardInstance;
 };
 
 showUserDialog();
