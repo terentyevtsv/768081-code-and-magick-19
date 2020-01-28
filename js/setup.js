@@ -59,8 +59,7 @@ var showUserDialog = function () {
 // Функция возвращает случайный целый элемент в выбранном диапазоне значений
 var getRandomInteger = function (min, max) {
   // случайное число от min до (max+1)
-  var randomValue = min + Math.random() * (max + 1 - min);
-  return Math.floor(randomValue);
+  return Math.floor(min + Math.random() * (max + 1 - min));
 };
 
 // Отрисовывает волшебников во фрагменте документа.
