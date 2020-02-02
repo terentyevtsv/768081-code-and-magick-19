@@ -136,11 +136,20 @@ setupOpen.addEventListener('keydown', function (evt) {
 var showDialog = function () {
   userDialog.classList.remove('hidden');
   document.addEventListener('keydown', onDialogEscPress);
+  setupClose.addEventListener('keydown', onSetupCloseEnterPress);
+};
+
+var onSetupCloseEnterPress = function (evt) {
+  if (evt.key === ENTER_KEY) {
+    closeDialog();
+  }
 };
 
 var onDialogEscPress = function (evt) {
   if (evt.key === ESCAPE_KEY) {
-    closeDialog();
+    if (!evt.target.matches('.setup-user-name')) {
+      closeDialog();
+    }
   }
 };
 
@@ -152,6 +161,7 @@ setupClose.addEventListener('click', function () {
 var closeDialog = function () {
   userDialog.classList.add('hidden');
   document.removeEventListener('keydown', onDialogEscPress);
+  setupClose.removeEventListener('keydown', onSetupCloseEnterPress);
 };
 
 renderWizards();
