@@ -41,6 +41,9 @@ var EYES_COLORS = [
 
 var WIZARD_COUNT = 4;
 
+var ENTER_KEY = 'Enter';
+var ESCAPE_KEY = 'Escape';
+
 // Указатель на разметку внутри шаблона
 var similarWizardTemplate = document
   .querySelector('#similar-wizard-template')
@@ -49,12 +52,6 @@ var similarWizardTemplate = document
 
 // Контейнер, в который добавляются разметки случайных волшебников
 var wizardListContainer = document.querySelector('.setup-similar-list');
-
-// Показывает диалог настройки волшебника
-var showUserDialog = function () {
-  var userDialog = document.querySelector('.setup');
-  userDialog.classList.remove('hidden');
-};
 
 // Функция возвращает случайный целый элемент в выбранном диапазоне значений
 var getRandomInteger = function (min, max) {
@@ -115,6 +112,47 @@ var renderWizard = function (wizard) {
   return wizardInstance;
 };
 
-showUserDialog();
+// Диалог, который должен показаться при нажатии на setupOpen
+var userDialog = document.querySelector('.setup');
+
+// Кнопка закрытия диалога
+var setupClose = userDialog.querySelector('.setup-close');
+
+// Элемент по которому нужно нажать для открытия настроек
+var setupOpen = document.querySelector('.setup-open');
+
+// По нажатию на иконку в главном окне появляется окно настройки
+setupOpen.addEventListener('click', function () {
+  showDialog();
+});
+
+// По нажатию клавиши ВВОД при активной иконке показывается окно настройки
+setupOpen.addEventListener('keydown', function (evt) {
+  if (evt.key === ENTER_KEY) {
+    showDialog();
+  }
+});
+
+var showDialog = function () {
+  userDialog.classList.remove('hidden');
+  document.addEventListener('keydown', onDialogEscPress);
+};
+
+var onDialogEscPress = function (evt) {
+  if (evt.key === ESCAPE_KEY) {
+    closeDialog();
+  }
+};
+
+// По нажатию крестика закрывается окно настройки
+setupClose.addEventListener('click', function () {
+  closeDialog();
+});
+
+var closeDialog = function () {
+  userDialog.classList.add('hidden');
+  document.removeEventListener('keydown', onDialogEscPress);
+};
+
 renderWizards();
-document.querySelector('.setup-similar').classList.remove('hidden');
+
