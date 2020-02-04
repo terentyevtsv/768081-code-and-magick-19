@@ -39,7 +39,18 @@ var EYES_COLORS = [
   'green'
 ];
 
+var FIREBALL_COLORS = [
+  '#ee4830',
+  '#30a8ee',
+  '#5ce6c0',
+  '#e848d5',
+  '#e6e848'
+];
+
 var WIZARD_COUNT = 4;
+
+var ENTER_KEY = 'Enter';
+var ESCAPE_KEY = 'Escape';
 
 // Указатель на разметку внутри шаблона
 var similarWizardTemplate = document
@@ -49,12 +60,6 @@ var similarWizardTemplate = document
 
 // Контейнер, в который добавляются разметки случайных волшебников
 var wizardListContainer = document.querySelector('.setup-similar-list');
-
-// Показывает диалог настройки волшебника
-var showUserDialog = function () {
-  var userDialog = document.querySelector('.setup');
-  userDialog.classList.remove('hidden');
-};
 
 // Функция возвращает случайный целый элемент в выбранном диапазоне значений
 var getRandomInteger = function (min, max) {
@@ -115,6 +120,100 @@ var renderWizard = function (wizard) {
   return wizardInstance;
 };
 
-showUserDialog();
+// Диалог, который должен показаться при нажатии на setupOpen
+var userDialog = document.querySelector('.setup');
+
+// Кнопка закрытия диалога
+var setupClose = userDialog.querySelector('.setup-close');
+
+// Элемент по которому нужно нажать для открытия настроек
+var setupOpen = document.querySelector('.setup-open');
+
+// Мантия волшебника
+var wizardCoat = userDialog.querySelector('.setup-wizard .wizard-coat');
+
+// Глаза волшебника
+var wizardEyes = userDialog.querySelector('.setup-wizard .wizard-eyes');
+
+// Файрбол волшебника
+var wizardFireball = userDialog.querySelector('.setup-fireball-wrap');
+
+var fireballInputColor = wizardFireball.querySelector('input');
+
+// Скрытые поля для обновления значений передаваемых на сервер для
+// мантии и цвета глаз
+var coatEyesInputColors = userDialog.querySelectorAll('.setup-wizard-appearance input');
+
+// По нажатию на иконку в главном окне появляется окно настройки
+setupOpen.addEventListener('click', function () {
+  showDialog();
+});
+
+// По нажатию клавиши ВВОД при активной иконке показывается окно настройки
+setupOpen.addEventListener('keydown', function (evt) {
+  if (evt.key === ENTER_KEY) {
+    showDialog();
+  }
+});
+
+var showDialog = function () {
+  userDialog.classList.remove('hidden');
+  document.addEventListener('keydown', onDialogEscPress);
+  setupClose.addEventListener('keydown', onSetupCloseEnterPress);
+  wizardCoat.addEventListener('click', onWizardCoatClick);
+  wizardEyes.addEventListener('click', onWizardEyesClick);
+  wizardFireball.addEventListener('click', onWizardFireballClick);
+};
+
+// Обработчик события клика по мантии волшебника
+var onWizardCoatClick = function () {
+  var coatColor = COAT_COLORS[getRandomInteger(0, COAT_COLORS.length - 1)];
+  wizardCoat.style.fill = coatColor;
+
+  coatEyesInputColors[0].value = coatColor;
+};
+
+var onWizardEyesClick = function () {
+  var eyesColor = EYES_COLORS[getRandomInteger(0, EYES_COLORS.length - 1)];
+  wizardEyes.style.fill = eyesColor;
+
+  coatEyesInputColors[1].value = eyesColor;
+};
+
+var onWizardFireballClick = function () {
+  var fireballColor = FIREBALL_COLORS[getRandomInteger(0, FIREBALL_COLORS.length - 1)];
+  wizardFireball.style.background = fireballColor;
+
+  fireballInputColor.value = fireballColor;
+};
+
+var onSetupCloseEnterPress = function (evt) {
+  if (evt.key === ENTER_KEY) {
+    closeDialog();
+  }
+};
+
+var onDialogEscPress = function (evt) {
+  if (evt.key === ESCAPE_KEY) {
+    if (!evt.target.matches('.setup-user-name')) {
+      closeDialog();
+    }
+  }
+};
+
+// По нажатию крестика закрывается окно настройки
+setupClose.addEventListener('click', function () {
+  closeDialog();
+});
+
+var closeDialog = function () {
+  userDialog.classList.add('hidden');
+  document.removeEventListener('keydown', onDialogEscPress);
+  setupClose.removeEventListener('keydown', onSetupCloseEnterPress);
+  wizardCoat.removeEventListener('click', onWizardCoatClick);
+  wizardEyes.removeEventListener('click', onWizardEyesClick);
+  wizardFireball.removeEventListener('click', onWizardFireballClick);
+};
+
 renderWizards();
-document.querySelector('.setup-similar').classList.remove('hidden');
+
