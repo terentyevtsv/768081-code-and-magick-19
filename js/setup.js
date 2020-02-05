@@ -14,7 +14,7 @@
 
   // Диалог, который должен показаться при нажатии на setupOpen
   var userDialog = document.querySelector('.setup');
-  var userDialogPosition = {};
+  var userDialogPosition;
 
   // Скрытые поля для обновления значений передаваемых на сервер для
   // мантии и цвета глаз
@@ -66,8 +66,12 @@
     wizardEyes.addEventListener('click', onWizardEyesClick);
     wizardFireball.addEventListener('click', onWizardFireballClick);
 
-    userDialogPosition.top = userDialog.offsetTop;
-    userDialogPosition.left = userDialog.offsetLeft;
+    if (userDialogPosition === undefined) {
+      userDialogPosition = {
+        top: userDialog.offsetTop,
+        left: userDialog.offsetLeft
+      };
+    }
   };
 
   var closeDialog = function () {
