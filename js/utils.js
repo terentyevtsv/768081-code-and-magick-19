@@ -21,27 +21,23 @@
 
       return maxItem;
     },
-
     getRandomValue: function (min, max) {
       // Функция возвращает случайное вещественное значение
       // в интервале от min до max
       return min + Math.random() * (max - min);
     },
-
     getRandomInteger: function (min, max) {
       // Функция возвращает случайное целое число в выбранном диапазоне значений
 
       // случайное число от min до (max+1)
       return Math.floor(min + Math.random() * (max + 1 - min));
     },
-
     isEscEvent: function (evt, action) {
       // Анализ нажатия клавиши esc
       if (evt.key === ESCAPE_KEY) {
         action();
       }
     },
-
     isEnterEvent: function (evt, action) {
       // Анализ нажатия клавиши enter
       if (evt.key === ENTER_KEY) {
