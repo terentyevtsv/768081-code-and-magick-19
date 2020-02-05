@@ -106,6 +106,5 @@
   });
 
   window.wizardsGenerator.renderWizards();
-
   document.querySelector('.setup-similar').classList.remove('hidden');
 })();
