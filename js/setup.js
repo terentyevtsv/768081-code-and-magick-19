@@ -20,7 +20,6 @@
   // мантии и цвета глаз
   var coatEyesInputColors = userDialog.querySelectorAll('.setup-wizard-appearance input');
 
-
   // Мантия волшебника
   var wizardCoat = userDialog.querySelector('.setup-wizard .wizard-coat');
 
